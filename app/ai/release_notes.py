@@ -1,10 +1,21 @@
-def generate_release_notes(commits: list[str]) -> str:
-    """
-    Turn a list of commit messages into simple, human-readable
-    release notes. Replace this with an actual LLM call as needed.
-    """
-    if not commits:
-        return "No changes in this release."
+def generate_release_notes(pr_title, pr_description):
+    return f"""
+# Release Notes
 
-    bullet_points = "\n".join(f"- {commit.strip()}" for commit in commits)
-    return f"## Release Notes\n\n{bullet_points}"
+## Feature
+
+{pr_title}
+
+## Description
+
+{pr_description}
+"""
+
+
+if __name__ == "__main__":
+    title = "Add user authentication"
+    description = "Added JWT authentication and protected API routes."
+
+    notes = generate_release_notes(title, description)
+
+    print(notes)
