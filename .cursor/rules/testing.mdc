@@ -1,0 +1,11 @@
+---
+description: Testing guidelines for this project
+globs: ["tests/**/*.py"]
+alwaysApply: true
+---
+
+# Testing Rules
+
+- Every new feature in `app/ai/` must have a corresponding test in `tests/`.
+- Use `pytest` for all tests; avoid unittest-style classes unless necessary.
+- Mock external LLM/API calls in tests; do not hit real endpoints.

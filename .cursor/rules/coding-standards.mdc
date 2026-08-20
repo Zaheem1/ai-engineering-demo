@@ -1,0 +1,12 @@
+---
+description: Coding standards for this project
+globs: ["**/*.py"]
+alwaysApply: true
+---
+
+# Coding Standards
+
+- Use type hints on all function signatures.
+- Follow PEP 8; format with `black` and lint with `ruff`.
+- Prefer explicit, small functions over large multi-purpose ones.
+- Write docstrings for public functions and modules.

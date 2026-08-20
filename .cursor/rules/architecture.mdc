@@ -1,0 +1,12 @@
+---
+description: Architecture guidelines for this project
+globs: ["app/**/*.py"]
+alwaysApply: true
+---
+
+# Architecture Rules
+
+- Keep FastAPI route handlers thin; business logic belongs in `app/ai/`.
+- AI-specific logic (prompting, generation, orchestration) lives under `app/ai/`.
+- MCP server code lives under `app/mcp/` and should not import from `app/main.py`.
+- Prefer dependency injection over global state for configuration and clients.
