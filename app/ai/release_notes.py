@@ -1,21 +1,41 @@
-def generate_release_notes(pr_title, pr_description):
-    return f"""
-# Release Notes
+import ollama
 
-## Feature
 
+MODEL = "tinyllama:latest"
+
+
+def generate_summary(pr_title, pr_description):
+
+    prompt = f"""
+Summarize the following GitHub Pull Request in ONE sentence.
+
+Title:
 {pr_title}
 
-## Description
-
+Description:
 {pr_description}
+
+Use ONLY the information provided above.
+Do not add facts.
+Do not mention code, APIs, functions, bugs, frameworks, or technologies
+unless they are explicitly mentioned.
+
+Return only the one-sentence summary.
 """
 
+    print(
+        "Generating summary... "
+        "this may take a minute or two on tinyllama."
+    )
 
-if __name__ == "__main__":
-    title = "Add user authentication"
-    description = "Added JWT authentication and protected API routes."
+    response = ollama.chat(
+        model=MODEL,
+        messages=[
+            {
+                "role": "user",
+                "content": prompt
+            }
+        ]
+    )
 
-    notes = generate_release_notes(title, description)
-
-    print(notes)
+    return response["message"]["content"].strip()
