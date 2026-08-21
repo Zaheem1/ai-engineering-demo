@@ -1,0 +1,8 @@
+notion-client
+python-dotenv
+PyGithub
+ollama
+requests
+fastapi
+uvicorn
+pytest

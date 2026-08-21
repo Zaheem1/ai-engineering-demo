@@ -1,37 +1,52 @@
-from release_notes import generate_release_notes
-from notion import create_release_note
+from app.ai.github import get_pull_request
+from app.ai.release_notes import generate_summary
+from app.ai.notion import create_release_note
 
 
-# Simulated GitHub Pull Request
-pr_title = "Add user authentication"
+# Get real GitHub Pull Request
+pr = get_pull_request(1)
 
-pr_description = """
-Added JWT authentication.
-Added login API.
-Added protected routes.
-"""
-
-pr_number = "PR-001"
-pr_author = "Zaheem"
+pr_title = pr["title"]
+pr_description = pr["description"]
+pr_number = str(pr["number"])
+pr_author = pr["author"]
 
 
-# Step 1: Generate release notes
-release_notes = generate_release_notes(
+# Generate only a summary with AI
+summary = generate_summary(
     pr_title,
     pr_description
 )
+
+
+# Python controls the final structure
+release_notes = f"""# Release Notes
+
+## Summary
+
+{summary}
+
+## Changes
+
+{pr_description}
+
+## Technical Details
+
+No technical details were provided.
+"""
+
 
 print("Generated Release Notes:")
 print(release_notes)
 
 
-# Step 2: Save the result to Notion
+# Save to Notion
 create_release_note(
     title=pr_title,
     pr_number=pr_number,
     pr_author=pr_author,
     status="Testing",
-    summary="Added user authentication functionality.",
+    summary=summary,
     release_notes=release_notes,
     created_by="AI Release Notes Skill",
 )
